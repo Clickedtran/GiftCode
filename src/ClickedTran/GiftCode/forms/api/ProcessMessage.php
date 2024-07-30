@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ClickedTran\GiftCode\forms\api;
 
+use Override;
 use pocketmine\player\Player;
 use venndev\vformoopapi\results\VResultString;
 use venndev\vnpctradegui\utils\MessageUtil;
@@ -19,7 +20,7 @@ final class ProcessMessage extends VResultString
         parent::__construct($nestedString);
     }
 
-    #[\Override] public function getResult(): string
+    #[Override] public function getResult(): string
     {
         return MessageUtil::process(
             message: $this->getInput(),
