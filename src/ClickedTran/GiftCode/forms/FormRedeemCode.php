@@ -13,7 +13,7 @@ use venndev\vformoopapi\attributes\custom\VInput;
 use venndev\vformoopapi\attributes\VForm;
 use venndev\vformoopapi\Form;
 use venndev\vformoopapi\utils\TypeForm;
-use venndev\vnpctradegui\utils\MessageUtil;
+use ClickedTran\GiftCode\utils\ConfigUtil;
 use JsonException;
 
 #[VForm(
@@ -34,11 +34,11 @@ final class FormRedeemCode extends Form
         parent::__construct($player, $middleware);
         $this->replaces["{player}"] = $player->getName();
         $this->replaces["{player_xuid}"] = $player->getXuid();
-        $this->setTitle(MessageUtil::process(
+        $this->setTitle(ConfigUtil::getNested(
             message: "forms.form-redeem-code.title",
             replaces: $this->replaces
         ));
-        $this->setContent(MessageUtil::process(
+        $this->setContent(ConfigUtil::getNested(
             message: "forms.form-redeem-code.content",
             replaces: $this->replaces
         ));
@@ -55,7 +55,7 @@ final class FormRedeemCode extends Form
     {
         if (GiftCode::getInstance()->getCode()->exists($code)) {
             $server = Server::getInstance();
-            $player->sendMessage(MessageUtil::process(
+            $player->sendMessage(ConfigUtil::getNested(
                 message: "messages.has-redeemed",
                 replaces: [
                     "{code}" => $code
@@ -72,7 +72,7 @@ final class FormRedeemCode extends Form
             GiftCode::getInstance()->getCode()->remove($code);
             GiftCode::getInstance()->getCode()->save();
         } else {
-            $player->sendMessage(MessageUtil::process(
+            $player->sendMessage(ConfigUtil::getNested(
                 message: "messages.code-not-exists",
                 replaces: [
                     "{code}" => $code

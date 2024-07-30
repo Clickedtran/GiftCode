@@ -7,7 +7,7 @@ namespace ClickedTran\GiftCode\forms\api;
 use Override;
 use pocketmine\player\Player;
 use venndev\vformoopapi\results\VResultString;
-use venndev\vnpctradegui\utils\MessageUtil;
+use ClickedTran\GiftCode\utils\ConfigUtil;
 
 final class ProcessMessage extends VResultString
 {
@@ -22,7 +22,7 @@ final class ProcessMessage extends VResultString
 
     #[Override] public function getResult(): string
     {
-        return MessageUtil::process(
+        return ConfigUtil::getNested(
             message: $this->getInput(),
             replaces: [
                 "{player}" => $this->getPlayer()?->getName() ?? "Unknown"
