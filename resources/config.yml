@@ -1,0 +1,102 @@
+---
+#####################################################################################
+# Plugin configuration
+# You can change the messages, command name, description, usage, and aliases
+# In the messages, you can use VPlaceHolders
+#     Link: https://github.com/VennDev/VPlaceHolder?tab=readme-ov-file#vplaceholder
+#     let create dynamic messages if you want!
+#####################################################################################
+
+# Messages configuration
+messages:
+  has-redeemed: '&aYou have redeemed the code &e{code}&a successfully!'
+  code-not-exists: '&cThe code &e{code}&c does not exist!'
+  must-input-code: '&cYou must input the code!'
+  must-input-command: '&cYou must input the command!'
+
+# Command configuration
+command:
+  name: 'giftcode'
+  description: 'GiftCode command'
+  usage: '/giftcode <code>'
+  aliases: ['code']
+
+# Form configuration
+forms:
+
+  # Redeem code form
+  form-redeem-code:
+    title: 'Redeem Code'
+    content: 'Enter the code you want to redeem'
+    input-code:
+      text: 'Code'
+      placeholder: 'Enter the code'
+
+  # Manager form
+  form-manager:
+    title: 'GiftCode Manager'
+    content: 'You can manage the GiftCode here'
+    button-create-code:
+      text: 'Create Code'
+      image: 'textures/items/paper'
+    button-list-code:
+      text: 'List Code'
+      image: 'textures/items/book'
+    button-delete-code:
+      text: 'Delete Code'
+      image: 'textures/items/redstone'
+
+  # Create code form
+  form-create-code:
+    title: 'Create Code'
+    content: 'Enter the code you want to create\n{player} is name of the player who redeem the code\n{player_xuid} is XUID of the player who redeem the code\n{player_name} is name of the player who redeem the code\n{player_uuid} is UUID of the player who redeem the code'
+    input-code:
+      text: 'Code'
+      placeholder: 'Enter the code'
+    input-command:
+      text: 'Command'
+      placeholder: 'Enter the command'
+    slider-days:
+      text: 'Days'
+      min: 1
+      max: 30
+      step: 1
+      default: 1
+    slider-hours:
+      text: 'Hours'
+      min: 1
+      max: 24
+      step: 1
+      default: 1
+    slider-minutes:
+      text: 'Minutes'
+      min: 1
+      max: 60
+      step: 1
+      default: 1
+    slider-seconds:
+      text: 'Seconds'
+      min: 1
+      max: 60
+      step: 1
+      default: 1
+
+  # List code form
+  form-list-code:
+    title: 'List Code'
+    content: 'Here is the list of codes'
+    input-start:
+      text: 'Start'
+      placeholder: 'Enter the start'
+    input-end:
+      text: 'End'
+      placeholder: 'Enter the end'
+
+  # Delete code form
+  form-delete-code:
+    title: 'Delete Code'
+    content: 'Enter the code you want to delete'
+    input-code:
+      text: 'Code'
+      placeholder: 'Enter the code'
+...

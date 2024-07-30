@@ -1,8 +1,8 @@
 name: GiftCode
 main: ClickedTran\GiftCode\GiftCode
 api: 5.0.0
-version: 1.0.6
-author: ClickedTran
+version: 1.1.0
+author: ClickedTran, VennDev
 
 permissions:
   giftcode.command:
@@ -23,3 +23,6 @@ permissions:
   giftcode.command.menu:
    default: op
    description: Permission for player open menu Giftcode
+  giftcode.command.redemption:
+    description: Permission for player redeem code
+    default: true
