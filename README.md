@@ -9,12 +9,6 @@
 - This is a Plugin that allows Admin to generate a giftcode for the server with optional time and rewards
 <br>
 
-## 📜Virion Supported
-- [Commando](https://github.com/CortexPE/Commando) (CortexPE)
-- [pmforms](https://github.com/dktapps-pm-pl/pmforms) (dktapps)
-- [SimplePacketHandler](https://github.com/Muqsit/SimplePacketHandler) (Muqsit)
-<br>
-
 ## 📚For Developer
 
 - You can access to GiftCode by using
@@ -52,6 +46,7 @@
 - Use `giftcode.command.remove` to remove giftcode existsing to data
 - Use `giftcode.command.list` to see all giftcode in data
 - Use `giftcode.command.help` to see all GiftCode Command
+- Use `giftcode.command.redemption` redeem code
 
 </details>
 
