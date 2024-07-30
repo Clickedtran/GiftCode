@@ -81,8 +81,7 @@ final class GiftCode extends PluginBase implements Listener
     {
         $this->getCode()->set($name, [
             "expire" => $expire,
-            "command" => $command,
-            "used" => false
+            "command" => $command
         ]);
         $this->getCode()->save();
     }

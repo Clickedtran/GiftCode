@@ -40,7 +40,7 @@ final class TaskManager extends Task
                             // This is the expiry time of the gift code it is in seconds
                             // Function calculates the time now and compares it with the expiry time
                             // Details: `/utils/TimeUtils.php`
-                            if (TimeUtil::isExpired($key["expire"]) || $key["used"]) $giftcode->remove($code);
+                            if (TimeUtil::isExpired($key["expire"])) $giftcode->remove($code);
                         }
                         FiberManager::wait(); // call this function to wait for the next tick
                     }
