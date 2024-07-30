@@ -19,13 +19,25 @@
  >- Create New GiftCode:
 
  ```php
-  GiftCode::getInstance()->createCode(string $name, int $day, int $hour, int $minute, int $second, string $command);
+  /**
+   * @param string $name
+   * @param float $expire
+   * @param string $command - It will encode to base64
+   * @throws JsonException
+   *
+   * Default method by ClickedTran, me don't want change it :)!
+   */
+  public function createCode(string $name, float $expire, string $command): void
 ```
 
  >- Remove GiftCode:
 
  ```php
-   GiftCode::getInstance()->removeCode(string $name);
+  /**
+   * @param string $name
+   * @throws JsonException
+   */
+  public function removeCode(string $name): void
 ```
 
 </details>
