@@ -15,7 +15,7 @@ use venndev\vformoopapi\attributes\VForm;
 use venndev\vformoopapi\Form;
 use venndev\vformoopapi\FormSample;
 use venndev\vformoopapi\utils\TypeForm;
-use venndev\vnpctradegui\utils\MessageUtil;
+use ClickedTran\GiftCode\utils\ConfigUtil;
 use Throwable;
 
 #[VForm(
@@ -35,11 +35,11 @@ final class FormManager extends Form
     {
         parent::__construct($player, $middleware);
         $this->replaces["{player}"] = $player->getName();
-        $this->setTitle(MessageUtil::process(
+        $this->setTitle(ConfigUtil::getNested(
             message: "forms.form-manager.title",
             replaces: $this->replaces
         ));
-        $this->setContent(MessageUtil::process(
+        $this->setContent(ConfigUtil::getNested(
             message: "forms.form-manager.content",
             replaces: $this->replaces
         ));
@@ -56,32 +56,32 @@ final class FormManager extends Form
     {
         $createCode = new FormSample($player);
         $createCode->setType(TypeForm::CUSTOM_FORM);
-        $createCode->setTitle(MessageUtil::process(
+        $createCode->setTitle(ConfigUtil::getNested(
             message: "forms.form-create-code.title",
             replaces: $this->replaces
         ));
-        $createCode->setContent(MessageUtil::process(
+        $createCode->setContent(ConfigUtil::getNested(
             message: "forms.form-create-code.content",
             replaces: $this->replaces
         ));
         // Add content for form with type `custom form`
         $createCode->addContent(new VInput(
-            text: MessageUtil::process("forms.form-create-code.input-code.text"),
-            placeholder: MessageUtil::process("forms.form-create-code.input-code.placeholder"),
+            text: ConfigUtil::getNested("forms.form-create-code.input-code.text"),
+            placeholder: ConfigUtil::getNested("forms.form-create-code.input-code.placeholder"),
         ), function(Player $player, mixed $data) {
             if ($data === "" || $data === null) {
-                $player->sendMessage(MessageUtil::process(
+                $player->sendMessage(ConfigUtil::getNested(
                     message: "messages.must-input-code",
                     replaces: $this->replaces
                 ));
             }
         });
         $createCode->addContent(new VInput(
-            text: MessageUtil::process("forms.form-create-code.input-command.text"),
-            placeholder: MessageUtil::process("forms.form-create-code.input-command.placeholder"),
+            text: ConfigUtil::getNested("forms.form-create-code.input-command.text"),
+            placeholder: ConfigUtil::getNested("forms.form-create-code.input-command.placeholder"),
         ), function(Player $player, mixed $data) {
             if ($data === "" || $data === null) {
-                $player->sendMessage(MessageUtil::process(
+                $player->sendMessage(ConfigUtil::getNested(
                     message: "messages.must-input-command",
                     replaces: $this->replaces
                 ));
@@ -95,11 +95,11 @@ final class FormManager extends Form
         ];
         foreach ($slidersNested as $sliderNested) {
             $createCode->addContent(new VSlider(
-                text: MessageUtil::process("forms.form-create-code.$sliderNested.text"),
-                min: (int)MessageUtil::process("forms.form-create-code.$sliderNested.min"),
-                max: (int)MessageUtil::process("forms.form-create-code.$sliderNested.max"),
-                step: (int)MessageUtil::process("forms.form-create-code.$sliderNested.step"),
-                default: (int)MessageUtil::process("forms.form-create-code.$sliderNested.default"),
+                text: ConfigUtil::getNested("forms.form-create-code.$sliderNested.text"),
+                min: (int)ConfigUtil::getNested("forms.form-create-code.$sliderNested.min"),
+                max: (int)ConfigUtil::getNested("forms.form-create-code.$sliderNested.max"),
+                step: (int)ConfigUtil::getNested("forms.form-create-code.$sliderNested.step"),
+                default: (int)ConfigUtil::getNested("forms.form-create-code.$sliderNested.default"),
             ), fn() => null);
         }
         $cmdName = GiftCode::getInstance()->getCmdName();
@@ -132,21 +132,21 @@ final class FormManager extends Form
     {
         $listCode = new FormSample($player);
         $listCode->setType(TypeForm::CUSTOM_FORM);
-        $listCode->setTitle(MessageUtil::process(
+        $listCode->setTitle(ConfigUtil::getNested(
             message: "forms.form-list-code.title",
             replaces: $this->replaces
         ));
-        $listCode->setContent(MessageUtil::process(
+        $listCode->setContent(ConfigUtil::getNested(
             message: "forms.form-list-code.content",
             replaces: $this->replaces
         ));
         $listCode->addContent(new VInput(
-            text: MessageUtil::process("forms.form-list-code.input-start.text"),
-            placeholder: MessageUtil::process("forms.form-list-code.input-start.placeholder"),
+            text: ConfigUtil::getNested("forms.form-list-code.input-start.text"),
+            placeholder: ConfigUtil::getNested("forms.form-list-code.input-start.placeholder"),
         ), fn() => null);
         $listCode->addContent(new VInput(
-            text: MessageUtil::process("forms.form-list-code.input-end.text"),
-            placeholder: MessageUtil::process("forms.form-list-code.input-end.placeholder"),
+            text: ConfigUtil::getNested("forms.form-list-code.input-end.text"),
+            placeholder: ConfigUtil::getNested("forms.form-list-code.input-end.placeholder"),
         ), fn() => null);
         $cmdName = GiftCode::getInstance()->getCmdName();
         $listCode->setFormSubmit(function(Player $player, array $data) use ($cmdName) {
@@ -174,17 +174,17 @@ final class FormManager extends Form
     {
         $deleteCode = new FormSample($player);
         $deleteCode->setType(TypeForm::CUSTOM_FORM);
-        $deleteCode->setTitle(MessageUtil::process(
+        $deleteCode->setTitle(ConfigUtil::getNested(
             message: "forms.form-delete-code.title",
             replaces: $this->replaces
         ));
-        $deleteCode->setContent(MessageUtil::process(
+        $deleteCode->setContent(ConfigUtil::getNested(
             message: "forms.form-delete-code.content",
             replaces: $this->replaces
         ));
         $deleteCode->addContent(new VInput(
-            text: MessageUtil::process("forms.form-delete-code.input-code.text"),
-            placeholder: MessageUtil::process("forms.form-delete-code.input-code.placeholder"),
+            text: ConfigUtil::getNested("forms.form-delete-code.input-code.text"),
+            placeholder: ConfigUtil::getNested("forms.form-delete-code.input-code.placeholder"),
         ), fn() => null);
         $cmdName = GiftCode::getInstance()->getCmdName();
         $deleteCode->setFormSubmit(function(Player $player, array $data) use ($cmdName) {
