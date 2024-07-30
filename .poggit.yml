@@ -7,11 +7,16 @@ projects:
     path: ""
     icon: icon.jpg
     libs:
-      - src: dktapps-pm-pl/pmforms/pmforms
-        version: ^2.1.0
-      - src: CortexPE/Commando/Commando
-        version: ^3.2.0
+      - src: LatamPMDevs/Commando/Commando
+        version: ^3.1.1
+        branch: pm5
       - src: muqsit/simplepackethandler/SimplePacketHandler
         version: ^0.1.3
         branch: pm5
+      - src: VennDev/VFormOOPAPI/VFormOOPAPI
+        version: ^2.2.3
+        branch: "main"
+      - src: VennDev/LibVapmPMMP/LibVapmPMMP
+        version: ^1.8.8
+        branch: "main"
 ...
