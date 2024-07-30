@@ -191,7 +191,7 @@ final class FormManager extends Form
             $code = $data[0];
             Server::getInstance()->dispatchCommand(
                 sender: $player,
-                commandLine: $cmdName . " delete $code"
+                commandLine: $cmdName . " remove $code"
             );
         });
         $deleteCode->setFormClose(function(Player $player) {
