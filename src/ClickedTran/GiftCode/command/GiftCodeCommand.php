@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace ClickedTran\GiftCode\command;
 
+use ClickedTran\GiftCode\command\subcmd\RedeemCodeCommand;
+use ClickedTran\GiftCode\forms\FormManager;
+use ClickedTran\GiftCode\forms\FormRedeemCode;
+use InvalidArgumentException;
 use pocketmine\Server;
 use pocketmine\player\Player;
 use CortexPE\Commando\BaseCommand;
@@ -13,36 +17,77 @@ use ClickedTran\GiftCode\command\subcmd\HelpGiftCodeCommand;
 use ClickedTran\GiftCode\command\subcmd\CreateGiftCodeCommand;
 use ClickedTran\GiftCode\command\subcmd\RemoveGiftCodeCommand;
 use ClickedTran\GiftCode\command\subcmd\ListGiftCodeCommand;
-use ClickedTran\GiftCode\form\FormManager;
+use ClickedTran\GiftCode\utils\ConfigUtil;
+use pocketmine\utils\TextFormat;
+use Throwable;
 
-class GiftCodeCommand extends BaseCommand{
+final class GiftCodeCommand extends BaseCommand
+{
 
-	public function prepare(): void{
-	  $this->setPermission("giftcode.command");
-	  $this->registerSubcommand(new HelpGiftCodeCommand("help", "Help GiftCode Command"));
-	  $this->registerSubcommand(new CreateGiftCodeCommand("create", "Create GiftCode Command"));
-	  $this->registerSubcommand(new RemoveGiftCodeCommand("remove", "Remove GiftCode Command"));
-	  $this->registerSubcommand(new ListGiftCodeCommand("list", "List All GiftCode"));
-	}
-	
-	public function onRun(CommandSender $sender, String $labelUsed, Array $args): void{
-	  if(!$sender instanceof Player){
-	      $sender->sendMessage("§9[ §4ERROR §9] §aPlease use in-game");
-	      return;
-	  }
-	  if(count($args) == 0){
-	    if(!Server::getInstance()->isOp($sender->getName()) && !$sender->hasPermission("giftcode.command.menu")){
-	       $form = new FormManager();
-	       $sender->sendForm($form->menuEnterCode($sender));
-	    }else{
-	      $form = new FormManager();
-	      $sender->sendForm($form->menuGiftCode($sender));
-	    }
-	  }
-	}
-
-	public function getPermission()
+    public function __construct(protected \pocketmine\plugin\Plugin $plugin)
     {
-        // TODO: Implement getPermission() method.
+        if (!$plugin instanceof GiftCode) throw new InvalidArgumentException("Plugin must be instance of GiftCode");
+        parent::__construct(
+            plugin: $plugin,
+            name: ConfigUtil::getNested('command.name'),
+            description: ConfigUtil::getNested('command.description'),
+            aliases: ConfigUtil::getNested('command.aliases'),
+        );
     }
+
+    public function prepare(): void
+    {
+        /** @var GiftCode $plugin */
+        $plugin = $this->plugin;
+        $this->setPermission('giftcode.command');
+        $this->registerSubcommand(new HelpGiftCodeCommand(
+            plugin: $plugin,
+            name: "help",
+            description: "Help GiftCode Command"
+        ));
+        $this->registerSubcommand(new CreateGiftCodeCommand(
+            plugin: $plugin,
+            name: "create",
+            description: "Create GiftCode Command"));
+        $this->registerSubcommand(new RemoveGiftCodeCommand(
+            plugin: $plugin,
+            name: "remove",
+            description: "Remove GiftCode Command"
+        ));
+        $this->registerSubcommand(new ListGiftCodeCommand(
+            plugin: $plugin,
+            name: "list",
+            description: "List All GiftCode"
+        ));
+        $this->registerSubcommand(new RedeemCodeCommand(
+            plugin: $plugin,
+            name: "redeem",
+            description: "Redeem GiftCode Command"
+        ));
+    }
+
+    /**
+     * @throws Throwable
+     */
+    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
+    {
+        if (!$sender instanceof Player) {
+            $sender->sendMessage(TextFormat::RED . "Please use this command in-game");
+        } elseif (count($args) == 0) {
+            if (
+                Server::getInstance()->isOp($sender->getName()) ||
+                $sender->hasPermission("giftcode.command.menu")
+            ) {
+               FormManager::getInstance($sender)->sendForm();
+            } else {
+                FormRedeemCode::getInstance($sender)->sendForm();
+            }
+        }
+    }
+
+    public function getPlugin(): \pocketmine\plugin\Plugin
+    {
+        return $this->plugin;
+    }
+
 }

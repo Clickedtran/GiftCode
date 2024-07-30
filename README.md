@@ -9,12 +9,6 @@
 - This is a Plugin that allows Admin to generate a giftcode for the server with optional time and rewards
 <br>
 
-## 📜Virion Supported
-- [Commando](https://github.com/CortexPE/Commando) (CortexPE)
-- [pmforms](https://github.com/dktapps-pm-pl/pmforms) (dktapps)
-- [SimplePacketHandler](https://github.com/Muqsit/SimplePacketHandler) (Muqsit)
-<br>
-
 ## 📚For Developer
 
 - You can access to GiftCode by using
@@ -25,13 +19,25 @@
  >- Create New GiftCode:
 
  ```php
-  GiftCode::getInstance()->createCode(string $name, int $day, int $hour, int $minute, int $second, string $command);
+  /**
+   * @param string $name
+   * @param float $expire
+   * @param string $command - It will encode to base64
+   * @throws JsonException
+   *
+   * Default method by ClickedTran, me don't want change it :)!
+   */
+  public function createCode(string $name, float $expire, string $command): void
 ```
 
  >- Remove GiftCode:
 
  ```php
-   GiftCode::getInstance()->removeCode(string $name);
+  /**
+   * @param string $name
+   * @throws JsonException
+   */
+  public function removeCode(string $name): void
 ```
 
 </details>
@@ -52,6 +58,7 @@
 - Use `giftcode.command.remove` to remove giftcode existsing to data
 - Use `giftcode.command.list` to see all giftcode in data
 - Use `giftcode.command.help` to see all GiftCode Command
+- Use `giftcode.command.redemption` redeem code
 
 </details>
 
